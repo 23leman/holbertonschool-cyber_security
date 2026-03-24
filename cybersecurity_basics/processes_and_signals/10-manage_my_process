@@ -2,11 +2,14 @@
 # Init script to start, stop and restart manage_my_process
 
 PID_FILE="/var/run/my_process.pid"
-PROCESS_FILE="./manage_my_process"
+# Əgər /var/run-a icazə yoxdursa, /tmp/my_process.pid istifadə edək
+if [ ! -w /var/run ]; then
+    PID_FILE="/tmp/my_process.pid"
+fi
 
 case "$1" in
     start)
-        nohup "$PROCESS_FILE" > /dev/null 2>&1 &
+        ./manage_my_process > /dev/null 2>&1 &
         echo $! > "$PID_FILE"
         echo "manage_my_process started"
         ;;
@@ -14,15 +17,15 @@ case "$1" in
         if [ -f "$PID_FILE" ]; then
             kill "$(cat "$PID_FILE")"
             rm "$PID_FILE"
-            echo "manage_my_process stopped"
         fi
+        echo "manage_my_process stopped"
         ;;
     restart)
         if [ -f "$PID_FILE" ]; then
             kill "$(cat "$PID_FILE")"
             rm "$PID_FILE"
         fi
-        nohup "$PROCESS_FILE" > /dev/null 2>&1 &
+        ./manage_my_process > /dev/null 2>&1 &
         echo $! > "$PID_FILE"
         echo "manage_my_process restarted"
         ;;
