@@ -1,3 +1,2 @@
 #!/bin/bash
-awk '$1 !~ /^#/ && NF > 0' /etc/ssh/sshd_config
-
+grep -v "^\s*#" /etc/ssh/sshd_config | grep -v "^\s*$"
