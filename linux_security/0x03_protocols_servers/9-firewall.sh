@@ -1,3 +1,3 @@
 #!/bin/bash
-iptables -A INPUT -p tcp --dport 22 -j ACCEPT
-iptables -P INPUT DROP
+sudo iptables -A INPUT -p tcp --dport 22 -j ACCEPT
+sudo iptables -P INPUT DROP
