@@ -1,2 +1,2 @@
 #!/bin/bash
-grep -v "^\s*#" /etc/ssh/sshd_config | grep -v "^\s*$"
+grep -vE "^\s*#|^\s*$" /etc/ssh/sshd_config
