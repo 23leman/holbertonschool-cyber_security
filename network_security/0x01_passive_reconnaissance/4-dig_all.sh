@@ -1,2 +1,2 @@
 #!/bin/bash
-dig +noall +answer $1 ANY
+dig $1 axfr
