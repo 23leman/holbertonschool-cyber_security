@@ -1,2 +1,1 @@
-#!/bin/bash
-echo "HBTN{p4ss1v3_r3c0n_f1rst_st3p}"
+HBTN{p4ss1v3_r3c0n_f1rst_st3p}
