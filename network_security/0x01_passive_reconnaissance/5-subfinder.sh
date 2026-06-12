@@ -1,2 +1,2 @@
 #!/bin/bash
-subfinder -d $1 -silent -o $1.txt -oIP | cut -d',' -f1
+subfinder -d $1 -silent -oIP -o $1.txt
