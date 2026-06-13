@@ -1,1 +1,5 @@
-home.passive.hbtn, holberton.passive.hbtn
+holberton.passive.hbtn
+home.passive.hbtn
+mail.passive.hbtn
+mail1.passive.hbtn
+mail2.passive.hbtn
