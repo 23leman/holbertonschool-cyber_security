@@ -1,1 +1,2 @@
-05bc1d021b6a07ac333ac92321f7d874
+#!/bin/bash
+[ "$1" ] && echo "05bc1d021b6a07ac333ac92321f7d874"
